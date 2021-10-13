@@ -28,11 +28,8 @@ public class Tokenizer {
      * @return A list of tokens for given document.
      */
     public static List<String> tokenizeString(String docString) {
-        docString = docString.toLowerCase() // Making all the letters lower case
-                .trim() // Removing leading and trailing white spaces.
-                .replaceAll(URL_REGEX, "") // Removing all URLs
-                .replaceAll("\\p{Punct}", "") // Removing punctutaion.
-                .replaceAll("\\d", ""); // Removing all numbers.
+        // Filter out URLs, Numbers and Punctuation.
+        docString = preprocesString(docString);
 
         List<String> wordList = new ArrayList<>();
 
@@ -43,5 +40,14 @@ public class Tokenizer {
         wordList.removeIf(x -> (x.trim().isEmpty() || x.length() < 3));
 
         return wordList;
+    }
+
+    private static String preprocesString(String docString) {
+        return docString.toLowerCase() // Making all the letters lower case
+                .trim() // Removing leading and trailing white spaces.
+                .replaceAll(URL_REGEX, "") // Removing all URLs
+                .replaceAll("/", " ") // Split lists made with '/' deliminator
+                .replaceAll("\\p{Punct}", "") // Removing punctutaion.
+                .replaceAll("\\d", ""); // Removing all numbers.
     }
 }

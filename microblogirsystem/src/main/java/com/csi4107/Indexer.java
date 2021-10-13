@@ -1,6 +1,5 @@
 package com.csi4107;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,6 +27,14 @@ public class Indexer {
             }
             this.index.get(uToken).push(entry);
         }
+    }
+
+    public int getDocumentFreq(String term) {
+        int ret = 0;
+        if (this.index.get(term) != null) {
+            ret = this.index.get(term).size();
+        }
+        return ret;
     }
 
     public Map<String, LinkedList<IndexEntry>> getIndex() {

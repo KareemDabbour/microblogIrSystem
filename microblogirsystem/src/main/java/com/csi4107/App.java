@@ -35,11 +35,14 @@ public final class App {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        test();
-        List<String> s = Tokenizer.tokenizeString(
-                "McEntee: Utah Minuteman cites Giffords shooting in canceling rally:  By Peg McEntee Tribune Columnist  The Utah... http://dlvr.it/F1HJJ");
-        System.out.println(docs.get(0));
         Indexer indexer = new Indexer();
+        test();
+        // List<String> s = Tokenizer.tokenizeString(
+        // "McEntee: Utah Minuteman cites Giffords shooting in canceling rally:  By Peg
+        // McEntee Tribune Columnist  The Utah... http://dlvr.it/F1HJJ");
+        if (!docs.isEmpty())
+            System.out.println(docs.get(0));
+
         // indexer.index("1", s); // FOR TESTING
         for (Document document : docs) {
             indexer.index(document.getId(), document.getTokens());
@@ -52,5 +55,6 @@ public final class App {
             if (i++ > 10)
                 break;
         }
+        System.out.println("DF: " + indexer.getDocumentFreq("salary"));
     }
 }
