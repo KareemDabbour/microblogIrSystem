@@ -3,7 +3,7 @@ package com.csi4107;
 import java.util.List;
 import java.util.Map;
 
-public final class App {
+public class App {
     /**
      * 
      * 

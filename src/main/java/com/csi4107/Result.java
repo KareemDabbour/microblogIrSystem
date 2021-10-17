@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Result {
     public static void saveToFile(Map<String, Map<String, Double>> results) {
-        try (FileWriter resFile = new FileWriter("./src/main/resudlts/Results.txt")) {
+        try (FileWriter resFile = new FileWriter("./src/main/results/Results.txt")) {
             int i = 0;
             for (String queryId : results.keySet()) {
                 if (results.get(queryId) == null) {
