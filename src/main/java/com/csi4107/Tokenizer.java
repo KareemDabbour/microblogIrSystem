@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Tokenizer {
-    private static final String STOP_WORDS_URI = "src/main/resources/StopWords.txt";
+    private static final String STOP_WORDS_URI = "./src/main/resources/StopWords.txt";
     private static final String URL_REGEX = "((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
     private static List<String> stopWords;
 
@@ -17,7 +17,8 @@ public class Tokenizer {
             stopWords = Files.readAllLines(Paths.get(STOP_WORDS_URI));
             stopWords.add("");
         } catch (Exception e) {
-            System.err.println("Stop Words did not load in properly: " + e.getMessage());
+            System.err.println("ERROR: Stop Words did not load in properly: " + e.getMessage());
+            System.out.println("Exiting  ... ");
             System.exit(1);
         }
     }
@@ -36,8 +37,8 @@ public class Tokenizer {
         wordList.addAll(Arrays.asList(docString.split(" ")));
         // Removing all stopwords.
         wordList.removeAll(stopWords);
-        // Removing all empty tokens and tokens that are shorter than 3 chars.
-        wordList.removeIf(x -> (x.trim().isEmpty() || x.length() < 3));
+        // Removing all empty tokens.
+        wordList.removeIf(x -> (x.trim().isEmpty()));
 
         return wordList;
     }
@@ -47,7 +48,7 @@ public class Tokenizer {
                 .trim() // Removing leading and trailing white spaces.
                 .replaceAll(URL_REGEX, "") // Removing all URLs
                 .replaceAll("/", " ") // Split lists made with '/' deliminator
-                .replaceAll("\\p{Punct}", "") // Removing punctutaion.
+                .replaceAll("\\p{Punct}", " ") // Removing punctutaion.
                 .replaceAll("\\d", ""); // Removing all numbers.
     }
 }

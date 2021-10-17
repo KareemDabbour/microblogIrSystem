@@ -1,60 +1,46 @@
 package com.csi4107;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.csi4107.Indexer.IndexEntry;
-
 public final class App {
-    private App() {
-    }
-
-    private static List<Document> docs = new ArrayList<>();
-
-    private static void test() {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/Trec_microblog11.txt"))) {// ))){
-            for (String line; (line = br.readLine()) != null;) {
-                Document d = new Document(line);
-                if (d.getId() != null && d.getTokens() != null && d.getTokens().size() > 0) {
-                    docs.add(d);
-                }
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
     /**
      * 
      * 
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        Indexer indexer = new Indexer();
-        test();
-        // List<String> s = Tokenizer.tokenizeString(
-        // "McEntee: Utah Minuteman cites Giffords shooting in canceling rally:  By Peg
-        // McEntee Tribune Columnist  The Utah... http://dlvr.it/F1HJJ");
-        if (!docs.isEmpty())
-            System.out.println(docs.get(0));
+        // Create a new index.
+        System.out.println("Creating a new index");
+        Index index = new Index();
 
-        // indexer.index("1", s); // FOR TESTING
-        for (Document document : docs) {
-            indexer.index(document.getId(), document.getTokens());
-        }
+        // Read the docs from default file
+        System.out.println("Processing Documents from file");
+        List<Document> docs = Util.getDocs();
 
-        // Print the first 10 index entries.
-        int i = 0;
-        for (Map.Entry<String, LinkedList<IndexEntry>> entry : indexer.getIndex().entrySet()) {
-            System.out.println(entry.toString());
-            if (i++ > 10)
-                break;
-        }
-        System.out.println("DF: " + indexer.getDocumentFreq("salary"));
+        // Index the docs.
+        System.out.println("Indexing Documents");
+        index.index(docs);
+
+        // Find out each docVector's length
+        // and save it in the Querier.
+        Querier.vectorizeDocs(docs);
+
+        // Read the queries from file and
+        // preproccess them for querying.
+        System.out.println("Processing Queries from file");
+        List<Query> queries = Util.getQueries();
+
+        // Make the queries.
+        System.out.println("Making the queries");
+        Map<String, Map<String, Double>> qMap = Querier.makeQueries(queries, index);
+
+        // Save the results to a file.
+        Result.saveToFile(qMap);
+        System.out.println("Saved results to file ./results/Results.txt");
+
+        System.out.println("Done ... ");
+        System.out.println("Exiting  ... ");
+
     }
 }

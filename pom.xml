@@ -7,25 +7,12 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <junit.version>5.6.0</junit.version>
     <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version> 
     <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
     <maven-javadoc-plugin.version>3.0.0</maven-javadoc-plugin.version>
     <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
   </properties>
   <dependencies>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
   <reporting>
     <plugins>
@@ -56,4 +43,14 @@
       </build>
     </profile>
   </profiles>
+  <build>
+  <sourceDirectory>
+  ./microblogirsystem/src/main
+  </sourceDirectory>
+    <resources>
+        <resource>
+          <directory>./microblogirsystem/src/main/resources</directory>
+        </resource>
+    </resources>
+  </build>
 </project>
