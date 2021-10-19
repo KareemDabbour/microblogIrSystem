@@ -34,12 +34,12 @@ public class Querier {
         return sortByValue(docRankMap, 1000);
     }
 
-    public static Map<String, Map<String, Double>> makeQueries(List<Query> queries, Index index) {
-        Map<String, Map<String, Double>> qMap = new LinkedHashMap<>();
+    public static List<Map<String, Double>> makeQueries(List<Query> queries, Index index) {
+        List<Map<String, Double>> qList = new LinkedList<>();
         for (Query query : queries) {
-            qMap.put(query.getQueryId(), Querier.makeQuery(query, index));
+            qList.add(makeQuery(query, index));
         }
-        return qMap;
+        return qList;
     }
 
     private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map, int limit) {

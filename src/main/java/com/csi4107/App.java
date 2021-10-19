@@ -21,7 +21,7 @@ public class App {
         // Index the docs.
         System.out.println("Indexing Documents");
         index.index(docs);
-
+        System.out.println("Number of unique tokens in vocabulary: " + index.getIndex().keySet().size());
         // Find out each docVector's length
         // and save it in the Querier.
         Querier.vectorizeDocs(docs);
@@ -33,10 +33,10 @@ public class App {
 
         // Make the queries.
         System.out.println("Making the queries");
-        Map<String, Map<String, Double>> qMap = Querier.makeQueries(queries, index);
+        List<Map<String, Double>> qList = Querier.makeQueries(queries, index);
 
         // Save the results to a file.
-        Result.saveToFile(qMap);
+        Result.saveToFile(qList);
         System.out.println("Saved results to file ./results/Results.txt");
 
         System.out.println("Done ... ");

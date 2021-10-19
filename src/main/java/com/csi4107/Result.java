@@ -1,19 +1,20 @@
 package com.csi4107;
 
 import java.io.FileWriter;
+import java.util.List;
 import java.util.Map;
 
 public class Result {
-    public static void saveToFile(Map<String, Map<String, Double>> results) {
+    public static void saveToFile(List<Map<String, Double>> results) {
         try (FileWriter resFile = new FileWriter("./src/main/results/Results.txt")) {
             int i = 0;
-            for (String queryId : results.keySet()) {
-                if (results.get(queryId) == null) {
+            for (Map<String, Double> result : results) {
+                if (result == null) {
                     continue;
                 }
                 int rank = 0;
                 i++;
-                for (Map.Entry<String, Double> entry : results.get(queryId).entrySet()) {
+                for (Map.Entry<String, Double> entry : result.entrySet()) {
                     String resFileString = i + "\tQ0\t" + entry.getKey() + "\t" + ++rank + "\t" + entry.getValue()
                             + "\tmyRun\n";
                     resFile.write(resFileString);
